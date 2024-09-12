@@ -17,6 +17,8 @@ const ProjectList = () => {
   useEffect(() => {
     (async () => {
       const { data: u } = await api.get("/project");
+      //Sorted projects by their name when initializing
+      u.sort((a,b)=> a.name.localeCompare(b.name));
       setProjects(u);
     })();
   }, []);
@@ -35,7 +37,7 @@ const ProjectList = () => {
 
   return (
     <div className="w-full p-2 md:!px-8">
-      <Create onChangeSearch={handleSearch} />
+      <Create onChangeSearch={handleSearch} setProjects={setProjects} projects={projects}/>
       <div className="py-3">
         {activeProjects.map((hit) => {
           return (
@@ -92,7 +94,8 @@ const Budget = ({ project }) => {
   return <ProgressBar percentage={width} max={budget_max_monthly} value={total} />;
 };
 
-const Create = ({ onChangeSearch }) => {
+//added new props
+const Create = ({ onChangeSearch, setProjects, projects}) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -114,6 +117,19 @@ const Create = ({ onChangeSearch }) => {
             placeholder="Search"
             onChange={(e) => onChangeSearch(e.target.value)}
           />
+        </div>
+        {/* //Added new functionality and newfeature that could help us sell the platform*/}
+        <div>
+          <button
+            className="bg-[#0560FD] text-[#fff] py-[12px] px-[20px] rounded-[10px] text-[16px] font-medium"
+            onClick={() => {
+              let reversedProjects = [...projects];
+            
+              reversedProjects.reverse();
+              setProjects(reversedProjects);
+            }}>
+            Ascending/Descending
+          </button>
         </div>
         {/* Create New Button */}
         <button
@@ -145,7 +161,11 @@ const Create = ({ onChangeSearch }) => {
                   const res = await api.post("/project", values);
                   if (!res.ok) throw res;
                   toast.success("Created!");
+                  //updated list of project after adding new one
+                  console.log(res.data);
+                  setProjects([...projects,res.data]);
                   setOpen(false);
+                  
                 } catch (e) {
                   console.log(e);
                   toast.error("Some Error!", e.code);

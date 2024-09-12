@@ -54,20 +54,21 @@ const Detail = ({ user }) => {
       {({ values, handleChange, handleSubmit, isSubmitting }) => {
         return (
           <React.Fragment>
+            <form onSubmit={handleSubmit}>
             <div className="flex justify-between flex-wrap mt-4">
               <div className="w-full md:w-[260px] mt-[10px] md:mt-0 ">
                 <div className="text-[14px] text-[#212325] font-medium	">Name</div>
                 <input
                   className="projectsInput text-[14px] font-normal text-[#212325] bg-[#F9FBFD] rounded-[10px]"
                   name="name"
-                  disabled
+                  //must be name enabled 
                   value={values.name}
                   onChange={handleChange}
                 />
               </div>
               <div className="w-full md:w-[260px] mt-[10px] md:mt-0">
                 <div className="text-[14px] text-[#212325] font-medium	">Email</div>
-                <input className="projectsInput text-[14px] font-normal text-[#212325] rounded-[10px]" name="email" value={values.email} onChange={handleChange} />
+                <input className="projectsInput text-[14px] font-normal text-[#212325] rounded-[10px]" name="email"  value={values.email} onChange={handleChange} />
               </div>
               <div className="w-full md:w-[165px] mt-[10px] md:mt-0">
                 <div className="text-[14px] text-[#212325] font-medium	">Status</div>
@@ -139,6 +140,7 @@ const Detail = ({ user }) => {
                 Delete
               </button>
             </div>
+            </form>
           </React.Fragment>
         );
       }}

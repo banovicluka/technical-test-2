@@ -174,6 +174,7 @@ const Activities = ({ date, user, project }) => {
                     })}
                   </tr>
                   {activities.map((e, i) => {
+                    console.log(e.total);
                     return (
                       <React.Fragment key={e.project}>
                         <tr className="border-t border-b border-r border-[#E5EAEF]" key={`1-${e._id}`} onClick={() => setOpen(i)}>
@@ -183,8 +184,9 @@ const Activities = ({ date, user, project }) => {
                                 <div>{e.projectName}</div>
                               </div>
                               <div className="flex flex-col items-end">
-                                <div className="text-xs italic font-normal">{(e.total / 8).toFixed(2)} days</div>
-                                <div className="text-[10px] italic font-normal">{(((e.total / 8).toFixed(2) / getTotal()) * 100).toFixed(2)}%</div>
+                                {/* added e.total && before to handle when total is zero */}
+                                <div className="text-xs italic font-normal">{e.total && (e.total / 8).toFixed(2)} days</div>
+                                <div className="text-[10px] italic font-normal">{e.total && (((e.total / 8).toFixed(2) / getTotal()) * 100).toFixed(2)}%</div>
                               </div>
                             </div>
                           </th>

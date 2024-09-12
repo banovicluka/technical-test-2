@@ -67,8 +67,9 @@ router.get("/", passport.authenticate("user", { session: false }), async (req, r
 router.put("/:id", passport.authenticate("user", { session: false }), async (req, res) => {
   try {
     const obj = req.body;
-
-    const user = await UserObject.findByIdAndUpdate(req.params.id, obj, { new: true });
+    console.log(obj);
+    // deleted {new:true}
+    const user = await UserObject.findByIdAndUpdate(req.params.id, obj);
     res.status(200).send({ ok: true, user });
   } catch (error) {
     console.log(error);
